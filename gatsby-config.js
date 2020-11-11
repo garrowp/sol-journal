@@ -2,6 +2,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-emotion`,
+    `gatsby-plugin-styled-components`,
     // create routes for client side routing
     {
       resolve: `gatsby-plugin-create-client-paths`,

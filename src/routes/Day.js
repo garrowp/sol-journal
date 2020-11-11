@@ -2,6 +2,8 @@ import React from "react"
 import { addDays, subDays, format, isAfter, startOfYesterday } from "date-fns"
 import { BeatLoader } from "react-spinners"
 import styled from "@emotion/styled"
+import Editor from "rich-markdown-editor"
+
 /** @jsx jsx */
 import { jsx, css, keyframes } from "@emotion/core"
 import { compose } from "recompose"
@@ -14,7 +16,6 @@ import { OnlineContext } from "components/context/online"
 import { SIZES } from "styles/constants"
 
 import Seek from "components/Seek"
-import Icon from "components/Icon"
 
 const EntryHeading = styled.div`
   display: flex;
@@ -50,8 +51,8 @@ const OfflineNotice = styled.div`
   font-size: ${SIZES.tiny};
   border-radius: 3px;
 `
-const JournalEntryArea = styled.textarea`
-  font-family: sans-serif;
+
+const JournalEntryArea = styled(Editor)`
   flex-grow: 0.85;
   color: ${props => props.theme.colors.primary};
   caret-color: ${props => props.theme.colors.secondary};
@@ -59,30 +60,29 @@ const JournalEntryArea = styled.textarea`
   line-height: 1.5;
   letter-spacing: 0.5px;
   height: calc(100vh - 300px);
-  width: 100%;
   border: none;
   resize: none;
   outline: none;
-  font-size: ${SIZES.small};
   border-radius: 1px;
   margin-top: ${SIZES.tiny};
   padding-top: 0px;
   padding-bottom: 0px;
+  padding-left: ${SIZES.medium};
+  padding-right: ${SIZES.medium};
+  overflow: scroll;
+  justify-content: unset !important;
+  & > div {
+    height: 100%;
+    background-color: transparent;
+  }
   &::placeholder {
-    color: ${props => props.theme.colors.tertiary};
+    color: ${props => {
+      return props.theme.colors.tertiary}};
   }
-  &::selection {
-    background: ${props => props.theme.colors.hover};
-  }
-  &:focus {
+  &:focus-within {
     box-shadow: 0 0 0 8px ${props => props.theme.colors.bodyBackground},
       0 0 0 10px ${props => props.theme.colors.hover};
   }
-`
-const Buttons = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-top: 20px;
 `
 const fadeKeyFrames = keyframes`
   from {
@@ -178,7 +178,18 @@ class Day extends React.Component {
     const text = e.target.value
     const { year, month, day } = this.props
 
-    this.setState({ text, lastEditedAt: new Date() })
+    this.setState({ lastEditedAt: new Date() })
+    this.timeout = setTimeout(() => {
+      this.saveText(text, year, month, day)
+    }, AUTOSAVE_DELAY)
+  }
+
+  handleChange = value => {
+    if (this.timeout) clearTimeout(this.timeout)
+    const text = value()
+    const { year, month, day } = this.props
+
+    this.setState({ lastEditedAt: new Date() })
     this.timeout = setTimeout(() => {
       this.saveText(text, year, month, day)
     }, AUTOSAVE_DELAY)
@@ -282,23 +293,10 @@ class Day extends React.Component {
         ) : (
           <>
             <JournalEntryArea
-              id="entry-text-area"
-              autoFocus={true}
-              placeholder="Start writing..."
-              onChange={e => this.onChangeText(e)}
-              value={text}
-              css={css`
-                animation: ${fadeKeyFrames} 0.2s ease-in;
-              `}
+              defaultValue={text}
+              onChange={this.handleChange}
+              dark={theme.name === "DARK"}
             />
-            <Buttons>
-              <Icon
-                name="Clock"
-                label="Quick Add Time"
-                labelRight
-                onClick={() => this.onInsertTime()}
-              />{" "}
-            </Buttons>
           </>
         )}
       </>
