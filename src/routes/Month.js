@@ -69,7 +69,7 @@ class Month extends Component {
         dayCards.push(
           <DayCard disabled={isDisabled} key={i}>
             <DayCardBanner>
-              {format(new Date(year, month - 1, i + 1), "ddd")}
+              {format(new Date(year, month - 1, i + 1), "eee")}
             </DayCardBanner>
             <DayCardContent>{i + 1}</DayCardContent>
           </DayCard>
@@ -78,12 +78,12 @@ class Month extends Component {
         dayCards.push(
           <Link
             key={i}
-            to={format(new Date(year, month - 1, i + 1), "/YYYY/MM/DD")}
+            to={format(new Date(year, month - 1, i + 1), "/yyyy/MM/dd")}
             style={{ textDecoration: "none" }}
           >
             <DayCard key={i}>
               <DayCardBanner>
-                {format(new Date(year, month - 1, i + 1), "ddd")}
+                {format(new Date(year, month - 1, i + 1), "eee")}
               </DayCardBanner>
               <DayCardContent>{i + 1}</DayCardContent>
             </DayCard>
@@ -95,9 +95,9 @@ class Month extends Component {
     return (
       <>
         <Seek
-          title={format(currentDay, "YYYY MMM")}
-          prev={format(subMonths(currentDay, 1), "/YYYY/MM")}
-          next={format(addMonths(currentDay, 1), "/YYYY/MM")}
+          title={format(currentDay, "yyyy MMM")}
+          prev={format(subMonths(currentDay, 1), "/yyyy/MM")}
+          next={format(addMonths(currentDay, 1), "/yyyy/MM")}
           disableNext={isAfter(
             currentDay,
             startOfMonth(subMonths(new Date(), 1))

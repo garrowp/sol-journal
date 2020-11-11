@@ -71,7 +71,7 @@ class User extends React.Component {
       })
 
       const file = {
-        name: `journal-export-${format(new Date(), "MMDDYYYY")}.json`,
+        name: `journal-export-${format(new Date(), "MMddyyyy")}.json`,
         data: window.URL.createObjectURL(blob),
       }
       this.setState({ files: [file], exporting: false })

@@ -237,9 +237,9 @@ class Day extends React.Component {
     return (
       <>
         <Seek
-          title={format(currentDay, "YYYY MMM DD - dddd")}
-          prev={format(subDays(currentDay, 1), "/YYYY/MM/DD")}
-          next={format(addDays(currentDay, 1), "/YYYY/MM/DD")}
+          title={format(currentDay, "yyyy MMM dd - eeee")}
+          prev={format(subDays(currentDay, 1), "/yyyy/MM/dd")}
+          next={format(addDays(currentDay, 1), "/yyyy/MM/dd")}
           disableNext={isAfter(currentDay, startOfYesterday())}
         />
         <EntryHeading>

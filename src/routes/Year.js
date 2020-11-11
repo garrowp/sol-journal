@@ -43,8 +43,8 @@ class Year extends Component {
       <div>
         <Seek
           title={year}
-          prev={format(subYears(currentDate, 1), "/YYYY")}
-          next={format(addYears(currentDate, 1), "/YYYY")}
+          prev={format(subYears(currentDate, 1), "/yyyy")}
+          next={format(addYears(currentDate, 1), "/yyyy")}
           disableNext={year >= new Date().getFullYear()}
         />
         <MonthCardGrid>
@@ -57,7 +57,7 @@ class Year extends Component {
             ) : (
               <Link
                 key={index}
-                to={format(new Date(year, index), "/YYYY/MM")}
+                to={format(new Date(year, index), "/yyyy/MM")}
                 style={{ textDecoration: "none" }}
               >
                 <MonthCard>{month}</MonthCard>
