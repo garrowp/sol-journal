@@ -1,6 +1,9 @@
 import React, { Component } from "react"
 import { Helmet } from "react-helmet"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { Link, 
+  // StaticQuery, 
+  // graphql
+ } from "gatsby"
 import Img from "gatsby-image"
 import styled from "@emotion/styled"
 import { withTheme } from "emotion-theming"
@@ -109,7 +112,7 @@ class Start extends Component {
             maxHeight: 350,
           }}
         >
-          <StaticQuery
+          {/* <StaticQuery
             query={graphql`
               query {
                 landingGraphicLight: file(
@@ -155,7 +158,7 @@ class Start extends Component {
                 />
               )
             }}
-          />
+          /> */}
         </div>
         <div
           style={{
